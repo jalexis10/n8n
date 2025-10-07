@@ -1,11 +1,14 @@
-# Usa la última versión estable de n8n
+# Usa la imagen oficial de n8n más reciente
 FROM n8nio/n8n:latest
 
-# Crea un directorio para los datos persistentes
-VOLUME /home/node/.n8n
+# Establecer el directorio de trabajo
+WORKDIR /home/node
 
-# Expón el puerto que Render usará
-EXPOSE 10000
+# Asegura permisos adecuados
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+
+# Exponer el puerto predeterminado
+EXPOSE 5678
 
 # Comando de inicio
-CMD ["n8n", "start"]
+ENTRYPOINT ["tini", "--", "n8n"]
